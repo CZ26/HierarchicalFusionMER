@@ -151,8 +151,10 @@ class LGGCN(nn.Module):
         graph_out_V = self.gcn3(features_V, edge_index_V, edge_norm_V, edge_type_V)
 
 
-        fea1 = self.att(graph_out_A,graph_out_T, graph_out_A)
-        fea2 = self.att(graph_out_V,graph_out_T, graph_out_V)
+        # fea1 = self.att(graph_out_A,graph_out_T, graph_out_A)
+        # fea2 = self.att(graph_out_V,graph_out_T, graph_out_V)
+        fea1 = self.cross_attention(graph_out_A,graph_out_T)
+        fea2 = self.cross_attention(graph_out_V,graph_out_T)
      
 
         features_graph = torch.cat([graph_out_T,fea1.squeeze(1),fea2.squeeze(1)],dim=-1)
